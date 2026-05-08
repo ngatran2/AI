@@ -1,17 +1,38 @@
 # 📊 PROJECT MASTER DASHBOARD: JOYS QA AUTOMATION
 
 > [!IMPORTANT]
-> **Project Health:** 🟢 **Healthy**
+> **Project Health:** 🟢 **Healthy** | **Overall Progress:** [███░░░░░░░] 30%
 > **Current Focus:** Step 3A/3B - Test Case Design for DM modules.
-> **Quality Standard:** ERA Score ≥ 70 | AQG Score ≥ 80%
+> **Quality Gate:** ERA Score ≥ 70 | AQG Score ≥ 80%
 
-## 🏁 High-Level Summary
-- **Overall Progress:** [███░░░░░░░] 30%
-- **Total Use Cases:** 8
-- **Requirement Audited:** 4/8
-- **Scenarios Designed:** 4/8
-- **Test Cases Designed:** 0/8
-- **Execution Completed:** 0/8
+---
+
+## 🏗️ Overall Project Pipeline
+```mermaid
+graph LR
+    S1([1. Audit]) --> S2([2. Scenario]) --> S3([3. Test Case]) --> S4([4. Execute]) --> S5([5. AQG]) --> S6([6. Report])
+    
+    classDef done fill:#2E7D32,stroke:#1B5E20,color:#fff;
+    classDef active fill:#FFEB3B,stroke:#FBC02D,color:#000;
+    classDef pending fill:#ECEFF1,stroke:#B0BEC5,color:#90A4AE;
+
+    class S1,S2 done;
+    class S3 active;
+    class S4,S5,S6 pending;
+```
+
+---
+
+## 📋 Master Task & Traceability Matrix
+| UC-ID | Feature Name | Status | Audit | Scenario | Test Case (Type) | RTM Coverage | Latest |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **UC-DM-11** | Card Type | 🔵 Design | ✅ v4 | ✅ v2 | 🔄 DET | ✅ Covered | Audit v4 |
+| **UC-DM-12** | Airport | ⏳ Pending | ✅ v3 | ✅ v1 | ⏳ HL | ✅ Covered | Audit v3 |
+| **UC-DN-01** | Login (2FA) | ⏳ Pending | ✅ v2 | ✅ v2 | ⏳ HL | ✅ Covered | Audit v2 |
+| **UC-DM-10** | Airline Cat. | ⏳ Pending | ✅ v7 | ✅ v4 | ⏳ DET | ✅ Covered | Audit v7 |
+| **UC-BL-18** | (TBD) | 🔄 Analysis | 🔄 v1 | ⏳ | - | ❌ Gap | v1 |
+
+**Legend:** 🟢 Done | 🔵 Active | 🔄 In Progress | ⏳ Pending | ✅ Covered | ❌ Gap
 
 ---
 
@@ -32,24 +53,16 @@
     },
     'themeVariables': {
       'primaryColor': '#ffffff',
-      
-      /* Task đã hoàn thành - Xanh lá đậm, chữ trắng để nổi bật */
       'doneTaskFill': '#2E7D32',
       'doneTaskBorderColor': '#1B5E20',
       'doneTaskContentColor': '#ffffff',
-      
-      /* Task đang làm - Vàng tươi, chữ đen để dễ đọc */
       'activeTaskFill': '#FFEB3B',
       'activeTaskBorderColor': '#FBC02D',
       'activeTaskContentColor': '#000000',
-      
-      /* Task chưa làm - Xanh dương nhạt, chữ đen */
       'taskFill': '#E3F2FD',
       'taskBorderColor': '#2196F3',
       'taskTextLightColor': '#000000',
       'taskContentColor': '#000000',
-
-      /* Màu chữ của Section bên trái */
       'sectionBGFill': '#f4f4f4',
       'sectionBGFill2': '#ffffff'
     }
@@ -79,29 +92,30 @@ gantt
 
 ---
 
-## 🗺️ QA Pipeline Flow (Refined)
+## ⚠️ Risk & Notes
+1. **AQG Threshold:** Kết quả thực thi phải đạt trên 80% điểm tin cậy (AQG Score) để Pass.
+2. **ERA Audit:** Test Cases phải đạt ERA Score ≥ 70 trước khi thực thi.
+3. **Traceability:** File RTM chi tiết (từng AC) nằm trong folder `testcases/[UC-ID]/`.
+
+---
+
+## 📚 Appendix: QA Methodology Flow
 ```mermaid
 graph TD
-    %% Node Definitions
-    START([Requirement Input]) --> AUDIT{Step 1: Audit}
+    START([Requirement]) --> AUDIT{1. Audit}
+    AUDIT -- "Pass" --> SCE[2. Scenario Design]
     
-    AUDIT -- "Fail" --> BA[BA Backlog]
-    BA --> AUDIT
-    
-    AUDIT -- "Pass" --> SCE[Step 2: Scenario Design]
-    
-    SCE --> TC_BRANCH{Step 3: TC Type}
-    
-    TC_BRANCH -->|Fast| HL[3A: High-Level TC]
-    TC_BRANCH -->|Full| DET[3B: Detail-Level TC]
+    SCE --> TC_TYPE{3. TC Type Selection}
+    TC_TYPE -->|Fast/Smoke| HL[3A. High-Level TC]
+    TC_TYPE -->|Full/Regression| DET[3B. Detail-Level TC]
     
     HL --> ERA{ERA Audit}
     DET --> ERA
     
-    ERA -- "Score < 70" --> TC_BRANCH
-    ERA -- "Score >= 70" --> EXEC[Step 4: Execution]
+    ERA -- "Score < 70" --> TC_TYPE
+    ERA -- "Score >= 70" --> EXEC[4. Execute Step]
     
-    EXEC --> AQG{AQG Quality Gate}
+    EXEC --> AQG{AQG Gate: Usability/Reliability}
     
     AQG -- "Score < 80%" --> RETEST[[RE-TEST REQUIRED]]
     RETEST --> EXEC
@@ -109,31 +123,13 @@ graph TD
     AQG -- "Score >= 80%" --> REPORT([Final Report])
 
     %% Styling for Light Theme
-    classDef startEnd fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px;
     classDef process fill:#E3F2FD,stroke:#1565C0,stroke-width:1px;
     classDef decision fill:#FFFDE7,stroke:#FBC02D,stroke-width:2px;
     classDef alert fill:#FFEBEE,stroke:#C62828,stroke-width:2px;
     classDef success fill:#F1F8E9,stroke:#388E3C,stroke-width:2px;
 
-    class START,REPORT success;
-    class AUDIT,TC_BRANCH,ERA,AQG decision;
-    class SCE,HL,DET,EXEC process;
-    class RETEST,BA alert;
+    class HL,DET,SCE,EXEC process;
+    class AUDIT,TC_TYPE,ERA,AQG decision;
+    class RETEST alert;
+    class REPORT success;
 ```
-
----
-
-## 📝 Detailed Task Tracker
-| UC-ID | Feature Name | Req Audit | Scenario | TC Type | TC Status | Execution | Latest Version |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **UC-DM-10** | Airline Cat. | ✅ v7 | ✅ v4 | DET | ⏳ Pending | - | v7 / v4 |
-| **UC-DM-11** | Card Type | ✅ v4 | ✅ v2 | DET | 🔄 In Progress | - | v4 / v2 |
-| **UC-DM-12** | Airport | ✅ v3 | ✅ v1 | HL | ⏳ Pending | - | v3 / v1 |
-| **UC-DN-01** | Login (2FA) | ✅ v2 | ✅ v2 | HL | ⏳ Pending | - | v2 / v2 |
-| **UC-BL-18** | (TBD) | 🔄 In Analysis | ⏳ Pending | - | ⏳ Pending | - | v1 |
-
----
-
-## ⚠️ Risk & Notes
-1. **AQG Threshold:** Lưu ý mọi kết quả thực thi phải được AI giải trình (Internal Note) và đạt trên 80% điểm tin cậy (không có False Positive, đủ evidence).
-2. **HL vs DET:** Ưu tiên gen High-Level (HL) cho các module DN (Login) để test nhanh Sanity, và Detail (DET) cho các module DM (Danh mục) để phủ kín RBAC.
