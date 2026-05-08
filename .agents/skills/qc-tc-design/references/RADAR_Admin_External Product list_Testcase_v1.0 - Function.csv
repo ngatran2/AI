@@ -1,0 +1,299 @@
+TC ID,Test Title/Summary of test cases,Pre-conditions,Test Steps,Expected Result
+External Product list,,,,
+Check product list,,,,
+FUNC_External Product list_1,Check product list in case no data,"MD is on the Product List page.
+The product list has no product.",1. Open the Product List screen,"1. Show the message ""No products found"""
+FUNC_External Product list_2,Check product list in case having data,"MD is on the Product List page.
+The product list has at least 1 product.",1. Open the Product List screen,"1. Show all the crawlled products. The list is sorted by Last Updated Date Newest first as default.
+"
+FUNC_External Product list_3,Check thumbnail display,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's image",2. The main product image (thumbnail) is displayed correctly.
+FUNC_External Product list_4,Check image when loading fails,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's image
+Note: Disconnect the network or Using an invalid image URL",2. A placeholder image or error message is displayed.
+FUNC_External Product list_5,Check product name display,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's name",2. The product name is displayed correctly.
+FUNC_External Product list_6,Check long product name,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product that has very long product name",2. The name is fully displayed in 2 or 3 lines and is not truncate.
+FUNC_External Product list_7,Check platform and logo display,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's platform and the platform's logo",2. The correct platform name and logo are displayed.
+FUNC_External Product list_8,Check brand name display,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's brand name",2. The correct brand name is displayed.
+FUNC_External Product list_9,Check missing brand name,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's brand name
+
+Note: Load a product with no brand data","2. ""Unknown"" is displayed or the brand field is hidden."
+FUNC_External Product list_10,Check Product ID display,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's id",2. The correct product ID is displayed. This id is the product id of the source page.
+FUNC_External Product list_11,Check normal price display in case the product has no sale price,"MD is on the Product List page.
+The product list has at least 1 product without sale price.","1. Open the Product List screen
+2. Focus on the product's normal price","2. The normal price is displayed in the correct format (25,200 원).
+No sale rate is displayed."
+FUNC_External Product list_12,Check final price and sale rate display when on sale,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's normal price and final price","2. The final price is displayed along with a strikethrough normal price (25,200 원 20,200 원)"
+FUNC_External Product list_13,Check sale rate display,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's sale rate","2. The discount percentage (X%) is correctly calculated and displayed, with the down arrow."
+FUNC_External Product list_14,Check category path with 3 levels,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's category",2. The full category hierarchy (parent → child → sub-child) is displayed.
+FUNC_External Product list_15,Check product URL display,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's URL",2. The URL is correctly displayed with truncation.
+FUNC_External Product list_16,Check copy link function,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's URL
+3. Click on the copy icon button",3. The URL is copied to the clipboard.
+FUNC_External Product list_17,Check opening product link,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's URL
+3. Click on the product link",3. The correct product page opens on the new tab.
+FUNC_External Product list_18,Check last updated date format,"MD is on the Product List page.
+The product list has at least 1 product.","1. Open the Product List screen
+2. Focus on the product's Last updated date",2. The date is displayed in yyyy-mm-dd hh-mm format.
+Check pagination,,,,
+FUNC_External Product list_19,Ensure that each page displays exactly 50 products records.,The product list contains more than 50 products.,"1. Open the product list page. 
+2. Observe the number of records displayed on the first page.",Exactly 50 products records are displayed on each page.
+FUNC_External Product list_20,"Ensure that clicking ""Next Page"" loads the next set of 50 products.",The product list contains more than 50 products.,"1. Open the product list page. 
+2. Click on the ""Next Page"" button. 
+3. Observe the job records displayed.","The next 50 products records are displayed correctly. 
+ No duplicate or missing records."
+FUNC_External Product list_21,"Ensure that clicking ""Previous Page"" returns to the previous set of jobs.",The MD is on the second page or later.,"1. Navigate to the second page. 
+2. Click on the ""Previous Page"" button.",The previous 50 products records are displayed.
+FUNC_External Product list_22,Ensure that the first page is always displayed when opening the product list.,The product list contains multiple pages.,1. Open the product list page.,The first 50 products records are displayed by default.
+FUNC_External Product list_23,Ensure that the last page displays the remaining records correctly (less than 50 if applicable).,"The product list contains records not evenly divisible by 50 (e.g.,123 jobs).",1. Navigate to the last page.,"The last page displays the remaining records correctly (e.g.,23 records for a total of 123 jobs)."
+FUNC_External Product list_24,Ensure that the total number of pages is calculated accurately based on the total product count.,The product list contains various numbers of records.,"1. Open the product list page. 
+2. Check the total number of products and total pages displayed.","The total number of pages is calculated as Total Products/50, rounded up."
+FUNC_External Product list_25,Ensure that pagination still works when filters are applied.,The product list contains multiple records that match and do not match the selected filters.,"1. Apply a filter that results in more than 50 matching products. 
+2. Navigate through pages using pagination controls.",Pagination functions correctly with filtered results.
+FUNC_External Product list_26,Ensure that pagination controls are hidden when there are 50 or fewer products.,The product list contains 50 or fewer products.,1. Open the product list page.,Pagination controls (Next/Previous Page) are not visible when there is only one page of products.
+FUNC_External Product list_27,Ensure that selecting a page number directly navigates to that page.,"The product list contains multiple pages, and the UI allows direct page selection.","1. Click on a specific page number (e.g., Page3).",The product list updates to show the records for the selected page.
+FUNC_External Product list_28,Ensure that the system retains the current page selection after a page refresh.,The MD is on a page other than the first one.,"1. Navigate to a different page (e.g., Page3). 
+2. Refresh the browser page.",The system reloads the product list and remains on the previously selected page.
+Check search products,,,,
+FUNC_External Product list_29,Check searching by Product Name (exact match),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter an exact product name
+3. Click on [Search] icon button",3. The correct product(s) are displayed.
+FUNC_External Product list_30,Check searching by Product Name (partial match),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter part of a product name
+3. Click on [Search] icon button",3. Relevant product(s) containing the keyword are displayed.
+FUNC_External Product list_31,Check searching by Product Name (with special characters),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter a product name containing special characters (e.g.,화홍엠 메이크업 브러쉬 클렌저 2종 택1 (50ml/300ml))
+3. Click on [Search] icon button",3. The correct product(s) are displayed.
+FUNC_External Product list_32,Check searching by Product Name (no matching result),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter a non-existing product name
+3. Click on [Search] icon button","3. ""No records found"" screen is displayed."
+FUNC_External Product list_33,Check searching by Product ID (exact match),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter the exact Product ID
+3. Click on [Search] icon button",3. The correct product is displayed.
+FUNC_External Product list_34,Check searching by Product ID (partial match),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter part of a Product ID
+3. Click on [Search] icon button",3. Relevant product(s) containing the ID sequence are displayed.
+FUNC_External Product list_35,Check searching by Product ID (no matching result),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter a non-existing Product ID
+3. Click on [Search] icon button","3. ""No records found"" screen is displayed."
+FUNC_External Product list_36,Check searching by Brand (exact match),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter the exact brand name
+3. Click on [Search] icon button",3. The correct product(s) from the brand are displayed.
+FUNC_External Product list_37,Check searching by Brand (partial match),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter part of a brand name
+3. Click on [Search] icon button",3. Relevant product(s) from the brand are displayed.
+FUNC_External Product list_38,Check searching by Brand (no matching result),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter a non-existing brand
+3. Click on [Search] icon button","3. ""No records found"" screen is displayed."
+FUNC_External Product list_39,Check searching by URL (exact match),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter the exact product URL
+3. Click on [Search] icon button",3. The correct product is displayed.
+FUNC_External Product list_40,Check searching by URL (partial match),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter part of the product URL
+3. Click on [Search] icon button",3. Relevant product(s) containing the URL segment are displayed.
+FUNC_External Product list_41,Check searching by URL (truncated format),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter a truncated URL (shortened version)
+3. Click on [Search] icon button",3. The correct product is displayed if truncation logic is supported.
+FUNC_External Product list_42,Check searching by URL (invalid format),"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter a malformed URL or non-existing URL
+3. Click on [Search] icon button
+
+Note: 
+- wrong protocol: fttp
+- space in url
+...","3. ""No records found"" screen is displayed."
+FUNC_External Product list_43,Check empty search input,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Search] icon button",3. All products are displayed. Nothing happens.
+FUNC_External Product list_44,Check search response time,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter a searching value
+3. Click on [Search] icon button","3. Search results should load within an acceptable time (e.g., <2s)."
+FUNC_External Product list_45,Check clearing search input,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Enter a searching value
+3. Click on [Search] icon button
+4. Click on [x] icon button on the search textbox",4. The product list resets to show all products.
+Check filter products,,,,
+FUNC_External Product list_46,Ensure Min < Max validation for Normal Price.,MD is on the Product List page.,"1. Click on Filter button 
+2. Enter Min price larger than Max price 
+3. Click Apply.","3. The system show the inline message below the Normal Price field: ""Min price must not exceed Max price""."
+FUNC_External Product list_47,Ensure Min < Max validation for Sale Price.,MD is on the Product List page.,"1. Click on Filter button 
+2. Enter Min sale price larger than Max sale price
+3. Click Apply.","3. The system show the inline message below the Sale Price field: ""Min price must not exceed Max price""."
+FUNC_External Product list_48,Ensure Min < Max validation for Sale Rate.,MD is on the Product List page.,"1. Click on Filter button 
+2. Enter Min sale rate larger than Max sale rate
+3. Click Apply.","3. The system show the inline message below the Sale Rate field: ""Min sale rate must not exceed Max sale rate""."
+FUNC_External Product list_49,Ensure Start Date < End Date validation for Last Update Date filter.,MD is on the Product List page.,"1. Click on Filter button 
+2. Enter Start Date after End Date
+3. Click Apply.","3. The system show the inline message below the Last Update field:: ""Start date must be before End date""."
+FUNC_External Product list_50,Ensure that clicking the Close button or outside the sidebar dismisses the filter panel.,The filter sidebar is open.,"1. Click on Filter button 
+2. Click on the Close button. 
+3. Click anywhere outside the sidebar.",3. The filter sidebar is dismissed.
+FUNC_External Product list_51,Ensure that selecting a platform updates the filter correctly.,MD is on the Product List page.,"1. Click on Filter button 
+2. Click on the Platform filter dropdown. 
+3. Select OliveYoung. 
+4. Click Apply.",4. The product list updates to show only products from OliveYoung.
+FUNC_External Product list_52,Ensure that selecting a category updates the filter correctly.,MD is on the Product List page.,"1. Click on Filter button 
+2. Click on the Platform filter dropdown. 
+3. Select OliveYoung
+4. Select a category (e.g: Skin care)
+5. Click Apply.",5. The product list updates to show only products of the selected category from OliveYoung.
+FUNC_External Product list_53,Ensure Normal Price filter applies correctly.,MD is on the Product List page.,"1. Click on Filter button 
+2. Enter Min price larger than Max price
+3. Click Apply.",3. The product list updates to show products with Normal Price between [Min inpputte price - Max inputted price]
+FUNC_External Product list_54,Ensure Final Price filter applies correctly.,MD is on the Product List page.,"1. Click on Filter button 
+2. Enter Min sale price larger than Max sale price
+3. Click Apply.",3. The product list updates to show products with Normal Price between [Min inpputte price - Max inputted price]
+FUNC_External Product list_55,Ensure Sale Rate filter applies correctly.,MD is on the Product List page.,"1. Click on Filter button 
+2. Enter Min sale rate larger than Max sale rate
+3. Click Apply.",3. The product list updates to show products with Sale Rate between [Min inputted sale rate - Max inputted sale rate]
+FUNC_External Product list_56,Ensure Last Update Date filter applies correctly.,MD is on the Product List page.,"1. Click on Filter button 
+2. Enter Start Date and End Date
+3. Click Apply.",3. The product list updates to show products with Last Update between entered Start date and End date at step 2.
+FUNC_External Product list_57,Ensure clicking the Apply button updates product list with selected filters.,MD has selected filters for all fields.,"1. Click on Filter button 
+2. Click Apply.",2. The product list updates based on the applied filters.
+FUNC_External Product list_58,Ensure clicking Reset Filter clears all applied filters.,MD has applied filters.,"1. Click on Filter button 
+2. Click Reset Filter.","2. All filters reset to default values. 
+The product list reverts to original unfiltered state."
+Check sort products,,,,
+FUNC_External Product list_59,Sort by Normal Price: High to Low,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select ""Normal Price: High to Low"" from the sort dropdown",3. Products are sorted in descending order of normal price.
+FUNC_External Product list_60,Sort by Normal Price: Low to High,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select ""Normal Price: Low to High"" from the sort dropdown",3. Products are sorted in ascending order of normal price.
+FUNC_External Product list_61,Sort by Final Price: High to Low,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select ""Final Price: High to Low"" from the sort dropdown",3. Products are sorted in descending order of sale price (final price).
+FUNC_External Product list_62,Sort by Final Price: Low to High,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select ""Final Price: Low to High"" from the sort dropdown",3. Products are sorted in ascending order of sale price (final price).
+FUNC_External Product list_63,Sort by Sale Rate: High to Low,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select ""Sale Rate: High to Low"" from the sort dropdown",3. Products are sorted in descending order of sale rate (discount percentage).
+FUNC_External Product list_64,Sort by Sale Rate: Low to High,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select ""Sale Rate: Low to High"" from the sort dropdown",3. Products are sorted in ascending order of sale rate (discount percentage).
+FUNC_External Product list_65,Sort by Last Updated Date: Newest to Oldest,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select ""Last Updated Date: Newest to Oldest"" from the sort dropdown",3. Products are sorted in descending order (latest update first).
+FUNC_External Product list_66,Sort by Last Updated Date: Oldest to Newest,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select ""Last Updated Date: Oldest to Newest"" from the sort dropdown",3. Products are sorted in ascending order (oldest update first).
+FUNC_External Product list_67,Check sorting when some products have missing values,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Apply sorting when some products have no price/sale rate",3. Products with missing values appear at the bottom (or are excluded from sorting).
+FUNC_External Product list_68,Check sorting combined with search filter,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Apply a search filter, then sort results",3. Sorting is applied only to the filtered results.
+FUNC_External Product list_69,Check reset sorting after page reload,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select a value to sort the list
+4. Refresh the page",4. The sorting order is reset to default after reload.
+FUNC_External Product list_70,Check sorting combined with pagination,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Apply sorting, then navigate to the next page",3. Sorting order remains consistent across paginated results.
+FUNC_External Product list_71,Check sort persistence after navigating back,"MD is on the Product List page.
+The product list has products.","1. Open Product list screen
+2. Click on [Sort by] dropdown list
+3. Select a value to sort the list
+4. Navigate to another page, and return",4. The sorting order remains the same when returning.
+Mapped with Musinsa Products section (updated from Price comparison section),,,,
+Check all objects,,,,
+FUNC_External Product list_72,Verify the Mapped with MUSINSA products Text,"MD is on the Product List page.
+The product list has at least 1 product that is mapped with Musinsa product.","1. Open Product list screen
+2. Focus on the product that is mapped with Musinsa Products","Display 'Mapped with MUSINSA products'.
+ 
+Display Rules:
+ - The font is bold."
+FUNC_External Product list_73,Verify the Platform Icon + Text,"MD is on the Product List page.
+The product list has at least 1 product that is mapped with Musinsa product.","1. Open Product list screen
+2. Focus on the product that is mapped with Musinsa Products","Display the Product ID of mapped Musinsa’s products
+ 
+Display Rules:
+- The ID of all mapped products will be displayed in CPI, sorted by DESC order.
+- The ID of mapped product will be shown in hyperlink, containing the URL to the designated internal product detail page on RADAR.
+-  If the list of mapped products is longer than the “Mapped with MUSINSA product” container’s height, the list will be scrollable.
+Database field: id of Internal Product"
+FUNC_External Product list_74,Verify the CPI ID,"MD is on the Product List page.
+The product list has at least 1 product that is mapped with Musinsa product.","1. Open Product list screen
+2. Focus on the product that is mapped with Musinsa Products","Show the 'Competitive Price Index' of the mapped product from an external platform for MD to know the ratio of that product's price compared to Musinsa’s product price.
+ 
+ Display Rules:
+ - Formula: CPI = ([Price of the mapped product] / [Price of the Musinsa's product]) * 100 (Does not count Musinsa’s product).
+ 
+ - Example calculations:
+  - [MUSINSA] || CPI: 120 || 21,000원
+  - [MUSINSA] || CPI: 100 || 25,200원
+  - [MUSINSA] || CPI: 98 || 25,714원
+  - A-bly - MUSINSA product a: CPI = (25,200 / 21,000) * 100 = 120
+  - A-bly - MUSINSA product b: CPI = (25,200 / 25,200) * 100 = 100
+  - A-bly - MUSINSA product c: CPI = (25,200 / 25,714) * 100 = 98
+ 
+ - CPI will be shown in different colors based on its value:
+  - If CPI > 100, the CPI value will be shown in Green color.
+  - If CPI = 100, the CPI value will be shown in Yellow color.
+  - If CPI < 100, the CPI value will be shown in Red color.
+ 
+ - CPI will always be rounded to 0 decimal places using the math.round() function (If >= 0.5 rounded up, if < 0.5 rounded down)."
+FUNC_External Product list_75,Verify the Product price Currency,"MD is on the Product List page.
+The product list has at least 1 product that is mapped with Musinsa product.","1. Open Product list screen
+2. Focus on the product that is mapped with Musinsa Products","Display MUSINSA's product final price.
+ 
+Display Rules:
+ - If there is data in salePrice db, display salePrice, else display normalPrice."
+FUNC_External Product list_76,Verify Mapped with Musinsa Products section in case the product is mapped with more than 1 Musinsa Product,"MD is on the Product List page.
+The product list has at least 1 product that is mapped with Musinsa product.","1. Open Product list screen
+2. Focus on the product that is mapped with Musinsa Products","Display all mapped Musinsa products, each product is shown in 1 row. The list is sorted by the order of Musinsa final price from low to high."

@@ -1,0 +1,92 @@
+TC ID,Test Title/Summary of test cases,Pre-conditions,Test Steps,Expected Result
+Create a Crawl Job,,,,
+Confirm initializing the screen,,,,
+FUNC_Create a Crawl Job_1,Confirm initializing the create job popup,Admin has successfully authenticated to the RADAR MD site.,"1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button","3. Open the Create a Craw Job popup:
+- ""Create a Crawl Job"" label
+- ""Platform"" dropdown: required, show ""Select platform"" placeholder
+- ""Job Type"" dropdown: required, show ""Select job type"" placeholder
+- [Create Crawl Job] button: enable
+- [Cancel] button: enable
+- [X] icon button: enable"
+FUNC_Create a Crawl Job_2,"Confirm initializing the create job popup in case select ""Get Products"" job type","Admin has successfully authenticated to the RADAR MD site.
+The system has at least 1 created job.","1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button
+4. Select ""Get Products"" for the Job Type field","3. Open the Create a Craw Job popup.
+4. The ""Categories"" dropdown is shown with the ""Please select categories that you want to crawl products"" placeholder."
+Confirm action of items,,,,
+FUNC_Create a Crawl Job_3,Confirm initializing the create job popup,Admin has successfully authenticated to the RADAR MD site.,"1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button","3. Open the Create a Craw Job popup:
+- ""Create a Crawl Job"" label
+- ""Platform"" dropdown: required, ""OliveYoung"" value is selected as defaul
+- ""Job Type"" dropdown: required, ""Get Categories"" value is selected as defaul
+- [Create Crawl Job] button: enable
+- [Cancel] button: enable
+- [X] icon button: enable"
+FUNC_Create a Crawl Job_4,Confirm action of the [X] icon button,Admin has successfully authenticated to the RADAR MD site.,"1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button
+4. Click on the [X] icon button","4. Close the Create a Crawl Job popup, back to the Job Lists screen."
+FUNC_Create a Crawl Job_5,Confirm action of the [Cancel] icon button,Admin has successfully authenticated to the RADAR MD site.,"1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button
+4. Click on the [Cancel] icon button","4. Close the Create a Crawl Job popup, back to the Job Lists screen."
+Confirm create a crawl job,,,,
+FUNC_Create a Crawl Job_6,Verify that the admin can not create a crawl job without selecting platform,Admin has successfully authenticated to the RADAR MD site.,"1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button
+4. Select a value of the ""Job type"" field
+5. Select a value of the ""Categories"" field if the selected value at step 4 is ""Get products""
+6. Click on [Create Crawl Job] button","6. Show an inline message stating below the ""Platform"" field: ""This field is required."""
+FUNC_Create a Crawl Job_7,Verify that the admin can not create a crawl job without selecting job type,Admin has successfully authenticated to the RADAR MD site.,"1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button
+4. Select a value of the ""Platform"" field
+5. Click on [Create Crawl Job] button","5. Show an inline message stating below the ""Job type"" field: ""This field is required."""
+FUNC_Create a Crawl Job_8,Verify that the admin can not create a crawl job without selecting category,Admin has successfully authenticated to the RADAR MD site.,"1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button
+4. Select a value of the ""Platform"" field
+5. Select value ""Get products"" of the ""Job type"" field
+6. Click on [Create Crawl Job] button","6. Show an inline message stating below the ""Categories"" field: ""This field is required."""
+FUNC_Create a Crawl Job_9,Ensure that the admin can create a crawl job for OY platform to get categories,"Admin has successfully authenticated to the RADAR MD site.
+The system has no running jobs.","1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button
+4. Select ""OliveYoung"" value of the ""Platform"" field
+5. Select ""Get categories"" value of the ""Job type"" field
+6. Click on [Create a Crawl Job] button","6. The Create a Crawl Job popup is closed, back to the Job Lists screen. The system show the success toast message ""Job created successfully"".
+A new crawl job is created and show in the first of the job list table, with below information:
+- Job ID: unique id is generated for the new job
+- Platform: show ""OliveYoung""
+- Job Type: show ""Get catigories""
+- Status: ""Running"" if the system is available to run the job immediately, ""Pending"" if the system is running other jobs
+- Start Date: created date time of the new crawl job
+- End data: show ""-"""
+FUNC_Create a Crawl Job_10,Verify that a job status changes from Pending to Running when execution starts.,A job is created and is in Pending status.,"1. The system execution job when available 
+2. Check job status.",The job status updates to Running when execution starts.
+FUNC_Create a Crawl Job_11,Ensure that the system updates the job status to Done when it completes successfully.,A job is in Running status.,"1. Let the job execute fully. 
+2. Verify the final job status.",The job status updates to Done upon successful completion.
+FUNC_Create a Crawl Job_12,Ensure that the system updates the job status to Failed if an error occurs.,A job is in Running status.,"1. Simulate a failure during job execution. 
+2. Verify the final job status.",The job status updates to Failed if an error occurs.
+FUNC_Create a Crawl Job_13,Verify that jobs can be created for both Get Categories and Get Products job types.,User is on the job creation form.,"1. Create a job with Get Categories type. 
+2. Create a job with Get Products type. 
+3. Check both jobs in the job list.",Jobs are successfully created with the correct job type.
+FUNC_Create a Crawl Job_14,Ensure that the system does not allow creating duplicate jobs with the same parameters.,A job with the same type and platform already exists in Pending status.,"1. Try to create a job with the same type and platform. 
+2. Check if the system allows it.",The system prevents duplicate job creation and displays an error message.
+FUNC_Create a Crawl Job_15,Ensure that the newly created job appears in the job list.,User creates a new job.,"1. Create a new job. 
+2. Navigate to the job list.",The new job is visible in the job list with the correct details.
+FUNC_Create a Crawl Job_16,Ensure that a failed job can be retried.,A job is in Failed status.,"1. Locate the failed job. 
+2. Click ""Retry"". 
+3. Verify job status updates to Pending and re-executes.",The job status changes to Pending and runs again.
+FUNC_Create a Crawl Job_17,Ensure that the admin can create crawl job to get products from many categories,"Admin has successfully authenticated to the RADAR MD site.
+The system has no running jobs.","1. Access the RADAR site
+2. Click on the Job Lists menu
+3. Click on the [Create Crawl Job] button
+4. Select ""OliveYoung"" value of the ""Platform"" field
+5. Select ""Get products"" value of the ""Job type"" field
+6. Select all categories
+7. Click on [Create Crawl Job]",The new job is visible in the job list with the correct details.
