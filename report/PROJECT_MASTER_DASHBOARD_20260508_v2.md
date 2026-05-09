@@ -5,6 +5,13 @@
 > **Current Focus:** Step 3A/3B - Test Case Design for DM modules.
 > **Quality Gate:** ERA Score ≥ 70 | AQG Score ≥ 80%
 
+## 🔌 Integration Status
+| Service | Status | Connection Type | Purpose |
+| :--- | :--- | :--- | :--- |
+| **Jira (ALM)** | 🔴 Disconnected | API Token | Auto-log Bug & Tracking |
+| **Database** | 🔴 Disconnected | JDBC/SQL | Layer 2 Data Verification |
+| **MCP (Local)** | 🟢 Connected | Direct Access | DOM & Clipboard Evidence |
+
 ---
 
 ## 🏗️ Overall Project Pipeline
