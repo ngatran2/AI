@@ -40,6 +40,12 @@ Mọi Endpoint phải có đủ 5 loại kịch bản:
     - **Failure Diagnostics:** Khi test thất bại, Agent BẮT BUỘC phải ghi rõ nguyên nhân vào cột Note/Actual Result (VD: "404 - Endpoint mismatch", "401 - Token Expired").
     - Kiểm tra tính đúng đắn của dữ liệu trong Response Body.
 
+## Tiêu chí đánh giá (Evaluation Criteria)
+Sản phẩm của quá trình tự động hóa API phải đạt:
+1. **Coverage (Độ bao phủ):** 100% các API Endpoints được trích xuất phải có Test Case bao trùm đủ 5 Pillars đã định nghĩa.
+2. **Reusability (Tính tái sử dụng):** Code sinh ra phải sử dụng biến môi trường (Environment Variables) cho Base URL và Token, không hardcode.
+3. **Traceability (Truy xuất lỗi):** Log lỗi sinh ra khi chạy test phải chứa đầy đủ Payload (Body đã gửi) và Response.
+4. **Data Cleansing (Dọn dẹp):** Mọi kịch bản POST/PUT sinh ra rác trong DB đều phải có hàm/hook (vd: @After/Teardown) gọi API DELETE tương ứng để dọn dẹp dữ liệu cuối mỗi test run.
 
 ## Output Contract
 - **Test Cases:** `testcases/[UC-ID]/[UC-ID]_api_testcases_[YYYYMMDD]_v[N].md`
