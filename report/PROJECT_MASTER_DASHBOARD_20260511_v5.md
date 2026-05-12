@@ -1,7 +1,7 @@
 # 📊 PROJECT MASTER DASHBOARD: JOYS QA AUTOMATION
 **Dự án:** JOYS-V3 LAMS (Lounge Access Management System)
 **Ngày cập nhật:** 2026-05-11
-**Phiên bản:** v4
+**Phiên bản:** v5
 
 > [!IMPORTANT]
 > **Project Health:** 🟢 **Healthy** | **Overall Progress:** [██████░░░░] 60%
@@ -35,10 +35,13 @@ graph LR
 ## 📋 Master Task & Traceability Matrix
 | UC-ID | Feature Name | Status | Audit | Scenario | Test Case | Functional Exec | Performance |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **UC-DM-11** | Card Type | 🔄 Performance | ✅ v4 | ✅ v2 | 🔄 DET | ⏳ Pending | ✅ v1 (JMX) |
-| **UC-DM-12** | Airport | ✅ Completed | ✅ v3 | ✅ v1 | ✅ DET | ✅ PASS 19/25 | ⏳ Pending |
-| **UC-DN-01** | Login (2FA) | ✅ Completed | ✅ v2 | ✅ v2 | ✅ HL | ✅ PASS | ⏳ Pending |
-| **UC-DM-10** | Airline Cat. | ✅ Completed | ✅ v7 | ✅ v4 | ✅ HL/DET | ✅ PASS 7/8 | ⏳ Pending |
+| **UC-BL-18** | UC-BL-18 | ⏳ Pending | ⏳ Pending | ⏳ Pending | ⏳ Pending | ⏳ Pending | ⏳ Pending |
+| **UC-DM-10** | UC-DM-10 | ✅ Completed | ✅ v7 | ✅ v4 | ✅ HL/DET | ✅ PASS/FAIL | ⏳ Pending |
+| **UC-DM-11** | UC-DM-11 | 🔄 In Progress | ✅ v4 | ✅ v2 | ⏳ Pending | ⏳ Pending | ⏳ Pending |
+| **UC-DM-12** | UC-DM-12 | 🔄 In Progress | ✅ v3 | ✅ v1 | ✅ HL/DET | ⏳ Pending | ⏳ Pending |
+| **UC-DM-13** | UC-DM-13 | ⏳ Pending | ⏳ Pending | ⏳ Pending | ⏳ Pending | ⏳ Pending | ⏳ Pending |
+| **UC-DM-16** | UC-DM-16 | ⏳ Pending | ⏳ Pending | ⏳ Pending | ⏳ Pending | ⏳ Pending | ⏳ Pending |
+| **UC-DN-01** | UC-DN-01 | 🔄 In Progress | ✅ v2 | ✅ v2 | ✅ HL/DET | ⏳ Pending | ⏳ Pending |
 
 ---
 

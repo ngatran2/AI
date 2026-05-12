@@ -14,6 +14,7 @@ Read the latest version of the UC Readiness Report and Test Scenarios (if availa
 ### Mode: `high-level` (HL)
 - **Goal:** Generate 5–15 representative test cases for Smoke/Sanity testing.
 - **Focus:** Happy Path per sub-function + 1 Critical Error per sub-function + 1 RBAC check.
+  - **Draft/Low Detail Rule:** If input is a **Draft** or score is **70-89**, strictly focus **ONLY on Main Flow / Happy Path**. Skip error cases unless they are the primary focus of the feature.
 - **Skips:** Feature Decomposition Tree, Edge Case Brainstorming, RBT Matrix, Self-Criticism Loop.
 - **Output suffix:** `testcases-hl`
 - **Use when:** Hotfix validation, CI/CD gate, quick build verification.
