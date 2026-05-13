@@ -46,5 +46,14 @@ Tài liệu này quy định các tiêu chuẩn kỹ thuật bắt buộc để 
 - **Deep Extraction:** Dùng `browser_subagent` + Clipboard (Ctrl+A/C) khi đọc Google Docs/Confluence để tránh mất bảng ẩn.
 - **Lean Evidence:** Chỉ chụp ảnh khi **FAIL/ERROR**. Không chụp case PASS.
 
+## 5. Report Integrity Guardrails (Prevention of Missing Info)
+
+| Hạng mục | Quy tắc bắt buộc (Guardrail) |
+| :--- | :--- |
+| **ID Matching** | Luôn gọi `.strip()` và sử dụng Regex hoặc chứa chuỗi (contains) để khớp TC ID, tránh lỗi do sai tiền tố (ví dụ: UCDN01 vs UC2FA05). |
+| **Zero-Gap Rule** | Tuyệt đối không để trống cột Status. Các case không chạy phải được điền `SKIPPED` hoặc `PENDING` kèm lý do. |
+| **Post-Write Audit** | Bắt buộc chạy lệnh Read-back để kiểm tra 3 cột (Status, Actual, Note) đã có dữ liệu trước khi báo cáo hoàn thành cho User. |
+| **Row Height** | Luôn set `row.height = 70-100` và `wrap_text = True` để đảm bảo nội dung Actual Result dài không bị che khuất. |
+
 ---
-*Last Updated: 2026-04-22 | Version: 3.0 (Optimized)*
+*Last Updated: 2026-05-13 | Version: 3.1 (Report Integrity Added)*

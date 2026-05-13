@@ -155,5 +155,8 @@ If the user explicitly rejects an output (e.g., "this audit is wrong"):
 2. Do NOT self-revise without explicit user guidance.
 3. Once corrections are received, produce a new versioned file.
 
-### Rule 5 — Synchronized Update for QA Artifacts
-If the user reviews and provides feedback on EITHER the Scenario file OR the Test Case file (when both were generated), BOTH files MUST be updated to ensure consistency. Do not update one without updating the other.
+### Rule 6 — Master Dashboard Update Frequency
+The `PROJECT_MASTER_DASHBOARD` MUST be updated at the end of each significant work day or after a major milestone (e.g., completing an execution cycle for a UC). 
+- It MUST NOT be updated for every single minor task to avoid version clutter.
+- The latest version ALWAYS serves as the single source of truth for project health and progress.
+- Updates MUST be saved as a new versioned file (e.g., `v7` → `v8`).

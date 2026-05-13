@@ -43,7 +43,7 @@ List all deployment environments. This is crucial for test execution and manual 
 
 | Environment | URL Endpoint                  | Database (Optional)          | Purpose                           |
 |-------------|-------------------------------|------------------------------|-----------------------------------|
-| **STAGING** | `https://lams-api.sotatek.works` | N/A                          | API Staging Environment           |
+| **STAGING** | `https://lams-api.sotatek.works` | `172.16.200.84:5432` (vna_lams_be) | API Staging Environment           |
 | **DEV**     | `https://dev.api.project.com` | `dev-db.project.internal`    | Development & initial testing     |
 | **QA / Staging** | `https://qa.api.project.com` | `qa-db.project.internal` | Primary environment for QA and UAT|
 | **UAT**     | `https://uat.api.project.com` | `uat-db.project.internal`    | User Acceptance Testing by clients|
@@ -135,7 +135,7 @@ These paths define where the pipeline reads and writes files. Agents MUST use th
 
 | Component | MCP Server | Status | Purpose |
 |---|---|---|---|
-| **Database Access** | `[e.g., postgres-mcp / mysql-mcp]` | ❌ Not configured | Layer 2 Data Integrity Verification (SELECT only) |
+| **Database Access** | `postgres-mcp` | 🟢 Configured | host=172.16.200.84, db=vna_lams_be, user=lams_readonly (Layer 2 Verification) |
 | **File System** | `[e.g., local-file-mcp]` | ❌ Not configured | Read/Write execution reports, evidence files |
 | **Browser Control** | `[e.g., playwright-mcp]` | ❌ Not configured | UI test execution, DOM inspection |
 | **API Testing** | `[e.g., fetch-mcp / rest-api-mcp]` | ❌ Not configured | API-based data preparation (Pre-conditions) |
