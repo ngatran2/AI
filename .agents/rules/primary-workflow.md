@@ -33,6 +33,7 @@ Upon receiving a job request, the AI **MUST** analyze which of the following ste
 - **PDF handling:** If the source is a `.pdf` file, invoke the `pdf` skill via the `Skill` tool first to extract its text and tables into readable text. Do NOT attempt to read PDF directly with the `view_file`/`Read` tool.
 - **Output:** `requirements/[UC-ID]/[UC-ID]_[feature-name]_audited_[YYYYMMDD]_v[N].md`
 - **Mandatory Content:** The output MUST include a **Readiness Verdict** (Ready / Conditionally Ready / Not Ready) and a **Completeness Score (0-100%)**.
+- **Technical Spec Sync (New):** During audit, the Agent MUST identify if the UC involves API/DB interactions. If technical specs (Swagger, Data Schema) are missing, the Agent MUST proactively ask the User for these inputs to ensure high-quality test design.
 
 ### Step 2: Scenario design (Optional)
 - **Goal:** Design test scenarios (Happy path, Edge case).
@@ -65,6 +66,7 @@ Upon receiving a job request, the AI **MUST** analyze which of the following ste
 - **Mandatory Output:** A **Requirement Traceability Matrix (RTM)** file (`_rtm_*.md`) mapping 100% of ACs to Test Cases.
 - **Typical case count:** 30–80+ cases per UC.
 - **When to use:** Full regression, pre-release QA, acceptance testing.
+- **Data-Driven Requirement:** For DET mode, the Agent MUST ensure all expected API responses and DB state changes are documented in the Test Case. If unknown, the Agent MUST prompt the User: *"Please provide Input/Output samples for Step X"*.
 
 > **Important:** Step 3A and Step 3B are **independent paths**. The user chooses ONE per invocation. They do NOT depend on each other (HL does NOT require DET to exist, and vice versa). Both require Step 1 output.
 
@@ -76,6 +78,7 @@ Upon receiving a job request, the AI **MUST** analyze which of the following ste
 - **Input:** `testcases/[UC-ID]/[UC-ID]_[feature-name]_testcases-{hl|det}_[YYYYMMDD]_v[N].xlsx`
 - **Mandatory Gate:** MUST perform **Execution Readiness Audit (ERA)** before running. Score MUST be **>= 70**.
 - **Output:** `execution/[UC-ID]/reports/res_[UC-ID]_[feature-name]_testcases-{hl|det}_res_[YYYYMMDD]_v[N].xlsx`
+- **Execution Mode Sync (New):** Before execution, the Agent MUST ask the User: *"Which verification mode should I use? (1. API-Only, 2. UI+DB, 3. Triple-Link/Full)"*.
 - **Mandatory Reporting:** The summary MUST include **RCA classification (R1-R4)**, **Stability Rating**, and **Reliability Score**.
 - **Note:** Execution accepts EITHER HL or DET test case files. The execution report inherits the same level suffix.
 
@@ -173,12 +176,12 @@ The `PROJECT_MASTER_DASHBOARD` MUST be updated at the end of each significant wo
 
 To ensure absolute reliability of testing results, the following rules apply to all execution tasks:
 
-### 1. Triple-Link Verification (UI-API-DB)
-A test case status is only considered **Trusted (PASS)** if the Agent can verify it across 3 layers (where technical access is available):
-- **Layer 1 (UI):** Visual confirmation of success messages and state changes.
-- **Layer 2 (API):** Response codes (200/201) and JSON payload integrity.
-- **Layer 3 (DB):** Direct record verification in PostgreSQL via MCP.
-If any layer fails while others pass, the result MUST be flagged as **Fail (Logic Leakage)**.
+### 1. Flexible Multi-Layer Verification (API-UI-DB)
+A test case status is determined based on the selected **Execution Mode**. A result is considered **Trusted (PASS)** only if it passes all layers required by that mode:
+- **API-Only Mode:** Verify Response Codes (200/201) and JSON payload integrity.
+- **UI+DB Mode:** Verify visual success messages on UI AND direct record verification in PostgreSQL.
+- **Triple-Link Mode (Full):** Verify UI + API + DB simultaneously.
+- **Note:** If any required layer fails while others pass, the result MUST be flagged as **Fail (Logic Leakage)**.
 
 ### 2. Reliability & Stability Assessment
 After each execution cycle, the Agent MUST report:
