@@ -7,20 +7,40 @@ Dành cho mục đích sharing và thấu hiểu nhanh sức mạnh của hệ t
 1. Chiến lược Thiết kế Test Case (Smart Design Strategy)
 Phân cấp linh hoạt (HL vs DET): Tùy chọn giữa tốc độ (High-level: 5-15 cases trọng yếu) và độ phủ (Detail-level: 30-80+ cases biên). Giúp tối ưu hóa chi phí token và thời gian chạy.
 Tiêu chuẩn "Bước Nguyên Tử" (Atomic Steps): Mọi test case đều được viết theo chuẩn Action Keywords [Click], [Input], [Verify]. Điều này biến tài liệu Excel thành "mã nguồn" mà cả người và máy (Automation) đều hiểu thống nhất 100%.
-Xác thực 3 lớp (Triple-Layer Verification): Không dừng lại ở việc check hiển thị (UI), AI bắt buộc phải đối soát dữ liệu (Database) và logic nghiệp vụ xuyên suốt.
-Phân quyền (RBAC) mặc định: Tự động gen kịch bản cho ít nhất 5 Roles tiêu chuẩn, đảm bảo an toàn dữ liệu tuyệt đối.
+Xác thực 3 lớp (Triple-Layer Verification): AI bắt buộc phải đối soát chéo giữa Giao diện (UI) -> API -> Cơ sở dữ liệu (PostgreSQL). Điều này giúp phát hiện các lỗi logic ngầm mà chỉ nhìn UI không thể thấy được.
+Phân quyền (RBAC) mặc định: Tự động gen kịch bản cho ít nhất 5 Roles tiêu chuẩn (Admin, View, Edit, Delete, Locked), đảm bảo an toàn dữ liệu tuyệt đối.
+
 2. Hệ thống Thực thi "Thông minh & Tin cậy" (Reliable Execution)
 ERA Audit (Quality Gate đầu vào): Hệ thống sẽ từ chối chạy nếu bộ test case không đủ điểm chất lượng (>70). Đảm bảo không phí thời gian vào kịch bản sai.
 Antigravity Quality Gate (AQG - Hậu kiểm): AI không chỉ báo Pass/Fail mà phải giải trình được logic (Internal Note) và cung cấp bằng chứng DOM/Clipboard/Logs. Loại bỏ hoàn toàn tình trạng báo cáo "Pass giả".
 Self-Healing & Tối ưu tốc độ: Tự động sửa Locator bị hỏng và tái sử dụng Session/State, giúp tốc độ thực thi nhanh gấp 5 lần so với các luồng automation truyền thống.
 MCP Integration: Kết nối trực tiếp vào "nội tạng" hệ thống (DB/Logs) để bắt lỗi tầng sâu thay vì chỉ nhìn bề mặt UI.
+
 📊 Quản lý dự án (Project Management)
 Tất cả tiến độ, sức khỏe dự án (Health Check) và ma trận truy vết (RTM) được cập nhật liên tục tại:
 
-Master Dashboard: PROJECT_MASTER_DASHBOARD_20260508_v2.md
-Tip
+Master Dashboard: PROJECT_MASTER_DASHBOARD_20260513_v11.md
 
+Tip
 Hãy mở file này để có cái nhìn tổng quan về trạng thái của từng Use Case (Audit, Scenario, Test Case, Execute).
+
+## 🔌 Kết nối Hệ thống (System Integrations)
+
+Hệ thống AI Agent hiện tại đã được thiết lập kết nối "sâu" với các nền tảng sau:
+
+*   **Jira (Bug Tracking & Sprint Monitoring):**
+    *   **Jira URL:** `https://jira.sotatek.com`
+    *   **Project Key:** `LAMS`
+    *   **Sprint Filter:** `BOARD_767`
+    *   **Account:** `nga.tran2@sotatek.com`
+    *   **Automation Hook:** Tự động quét vào **9:00 AM hằng ngày**. Khi phát hiện ticket chuyển từ `In Progress` sang `Ready for test` hoặc `Fixed`, AI sẽ tự động sinh báo cáo `report/daily-bug-notification.md`.
+*   **Database (Layer 2 Verification):**
+    *   **Host:** `172.16.200.84` (PostgreSQL)
+    *   **Port:** `5432`
+    *   **Database Name:** `vna_lams_be`
+    *   **User:** `lams_readonly`
+    *   **Mục đích:** Phục vụ kỹ thuật **Triple-Link Verification**. AI truy vấn trực tiếp DB để xác nhận bản ghi đã được tạo/cập nhật chính xác sau mỗi hành động trên UI.
+*   **Zixfel Extension:** Kết nối trực tiếp AI với môi trường trình duyệt, hỗ trợ giải mã OTP/2FA và tương tác DOM.
 
 📂 Cấu trúc dự án
 Dự án tuân thủ theo nguyên tắc phân chia thư mục rõ ràng, phục vụ chặt chẽ cho từng bước trong quy trình Pipeline.
@@ -89,7 +109,7 @@ Execution Readiness Audit (ERA): AI tự chấm điểm bộ Test Case (ERA Scor
 Triple-Layer Defense System: Tích hợp Zero-Skip (không được bỏ qua step), Deep Evidence (trích xuất DOM/Clipboard) và Fault Injection.
 Lean Evidence & Direct Navigation: Chỉ chụp ảnh lưu bằng chứng khi FAIL/ERROR để làm nhẹ báo cáo; áp dụng Direct-First Navigation (truy cập URL trực tiếp) trước khi thao tác UI rườm rà.
 Self-Healing Loop: Tự động phát hiện và vá lỗi Locator bị hỏng trong quá trình chạy Automation thông qua Snapshot DOM & Accessibility Tree (ưu tiên getByRole, getByLabel).
-MCP Integration (Optional): Kết nối trực tiếp với Database/Logs để xác minh dữ liệu tầng sâu (Layer 2) và trích xuất Trace ID/Error Stack khi gặp lỗi.
+MCP Integration & DB Access: Kết nối trực tiếp với PostgreSQL (host: 172.16.200.84) để xác minh dữ liệu tầng sâu (Layer 2) và trích xuất Trace ID/Error Stack khi gặp lỗi.
 Session Reuse & State Inheritance: Tái sử dụng phiên đăng nhập và kế thừa bộ lọc/state giữa các case tuần tự (workers: 1) giúp tăng tốc độ thực thi tự động hóa gấp 5 lần.
 Antigravity Quality Gate (AQG): Khâu hậu kiểm bắt buộc sau khi chạy xong để đánh giá:
 Độ tin cậy (Reliability): Loại bỏ False Positive thông qua việc đối chiếu chéo (Cross-check) giữa UI Evidence và API/DB Logs.
