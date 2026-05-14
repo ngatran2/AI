@@ -4,7 +4,7 @@ This file serves as the configuration template for the actual project utilizing 
 
 | Field   | Value                             |
 |---------|-----------------------------------|
-| Project | [Insert Real Project Name]        |
+| Project | JOYS-V3 LAMS (Lounge Access)      |
 | Created | [Insert Date]                     |
 | Author  | [Insert Author Name]              |
 | Version | v1                                |
@@ -27,7 +27,7 @@ Provide all access links required for gathering context and documentation.
 
 | Resource Type    | URL / Link                                      | Note / Access Requirement                |
 |------------------|-------------------------------------------------|------------------------------------------|
-| **Jira Board**   | `https://[company].atlassian.net/...`           | Sprint tracking, bug reporting           |
+| **Jira Board**   | `https://jira.sotatek.com/secure/WBSGanttMain.jspa?filter=BOARD_767` | Sprint tracking, bug reporting           |
 | **Confluence**   | `https://[company].atlassian.net/...`           | PRD, Architecture, API Specs             |
 | **Figma / UI**   | `https://figma.com/file/...`                    | Design mockups and design system         |
 | **Git Repo**     | `https://github.com/... / https://gitlab/...`   | Source code repository                   |
@@ -57,7 +57,7 @@ List all deployment environments. This is crucial for test execution and manual 
 
 | Vai trò | Username / Email | Password | Secret key (OTP) |
 | :--- | :--- | :--- | :--- |
-| Admin | nga.tran2+100@sotatek.com | Linh@12345 | N54X2TBDGYSSYJLOOJOTU4KTPNQUO4ZW |
+| Admin | nga.tran2@sotatek.com | Ngoc041001 | N54X2TBDGYSSYJLOOJOTU4KTPNQUO4ZW |
 | Admin View | nga.tran2+50@sotatek.com | Linh@12345 | krasyq2ikbevkmr3jb4hcxjdofxwm3tt |
 | Admin Delete | nga.tran2+51@sotatek.com | Linh@12345 | g5hee4lbnv5xulbyhzas6t3fijtvky3o |
 | Admin Edit | huong.pham1@yopmail.com | tgNzNT!A3qN2Oe | MFQVWUS6J4QUOJJEJNOVOV2SF5KDIZZU |
@@ -93,6 +93,11 @@ To allow the `docs-reader` agent to access authenticated Confluence or Jira page
 ### Security Rules
 - **NEVER** paste your token into a requirement file, output file, or any other document.
 - Tokens are **in-session only** — they are not stored or persisted anywhere.
+
+### Automation Hooks (Jira)
+| Condition | Target Status | Schedule | Action |
+| :--- | :--- | :--- | :--- |
+| Status Transition | `Ready for test`, `Fixed` | 09:00 AM | Save to `report/daily-bug-notification.md` |
 
 ---
 

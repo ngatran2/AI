@@ -273,3 +273,27 @@ Mọi kết quả `FAIL/ERROR` phải được gán nhãn RCA:
 ### 11.3 Efficiency & Leakage Metric
 - **Detection Efficiency:** `(Số Bug tìm thấy bằng Automation) / (Tổng số Bug phát hiện sau đó)`.
 - **Độ tin cậy (Reliability):** Dựa trên Triple-Link (UI+API+DB). Nếu pass UI mà DB không đổi data → **Leakage detected** (Logic ngầm sai).
+
+## 12. Jira Status Transition Hook (Automated Monitoring)
+
+Quy định này áp dụng cho việc theo dõi tự động các thay đổi trạng thái của Bug trên Jira để kích hoạt quy trình Re-test kịp thời.
+
+### 12.1 Điều kiện kích hoạt (The Hook)
+Agent thực hiện quét Jira định kỳ hoặc theo yêu cầu dựa trên các điều kiện:
+1.  **Chuyển trạng thái:** Khi một Ticket chuyển từ `In Progress` hoặc `Fixed` sang **`Ready for Test`** (hoặc trạng thái tương đương tùy dự án).
+2.  **Lịch trình (Cron):** Mặc định quét vào **9:00 AM hàng ngày** để tổng hợp danh sách các bug đã sẵn sàng để kiểm thử lại.
+
+### 12.2 Logic xử lý (The Action)
+Khi phát hiện có sự thay đổi hoặc có bug mới ở trạng thái `Ready for Test`, Agent thực hiện:
+1.  **Quét JQL:** Sử dụng câu lệnh `project = [Key] AND issuetype = Bug AND status = "Ready for Test"`.
+2.  **So sánh Snapshot:** Đối chiếu với bản báo cáo Bug gần nhất để xác định danh sách "Newly Ready for Test".
+3.  **Khởi tạo thông báo:**
+    - **Tạo file báo cáo:** Lưu tại `report/daily-bug-notification_YYYYMMDD.md`.
+    - **Nội dung:** Liệt kê ID, Tiêu đề, Link Jira và ghi chú Re-test (nếu có).
+4.  **Thông báo người dùng:** Gửi tóm tắt danh sách bug mới này trực tiếp cho User.
+
+### 12.3 Cấu hình trong Project Config
+Agent phải đọc các tham số sau từ `project_config.json` (Section `jira.hooks`):
+- `target_status`: Danh sách trạng thái cần theo dõi (mặc định: `Ready for Test`).
+- `scan_schedule`: Thời gian quét tự động.
+- `notification_channel`: `file` (mặc định) hoặc `email`.
