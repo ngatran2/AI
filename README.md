@@ -140,6 +140,16 @@ Hệ thống hỗ trợ 2 cấp độ thiết kế:
 
 ---
 
+## 💡 Mẹo làm việc hiệu quả với AI (AI Collaboration Tips)
+
+Để tối ưu hóa chi phí token và đảm bảo AI hoạt động minh mẫn nhất, hãy áp dụng các mẹo sau:
+
+1.  **Tóm tắt & Reset (Checkpointing):** Khi phiên chat quá dài hoặc tiêu thụ lượng Token lớn (thường trên 65% dung lượng), AI sẽ có hiện tượng "giảm trí nhớ" và trả lời kém chính xác hơn. Hãy yêu cầu AI tóm tắt trạng thái hiện tại thành một bản Checkpoint và sử dụng nó để bắt đầu một phiên chat mới nhằm khôi phục 100% khả năng tư duy.
+2.  **Audit ngược (Self-Critique):** Sau khi AI hoàn thành task, hãy ra lệnh: *"Hãy đóng vai QC Lead khó tính, chỉ ra 3 điểm yếu trong kết quả này và cách khắc phục"*.
+3.  **Tư duy trước khi làm (Chain-of-Thought):** Yêu cầu AI *"Giải thích logic thực hiện trước khi viết code"* để tránh sai sót ngay từ đầu.
+4.  **Chia nhỏ task (Atomic Prompts):** Chia các yêu cầu lớn thành các bước nhỏ tuần tự để AI tập trung tối đa độ chính xác.
+5.  **Negative Constraints:** Sử dụng lệnh phủ định như *"Tuyệt đối không ghi đè file X"* hoặc *"Bỏ qua các giải thích dài dòng, chỉ trả về kết quả JSON"*.
+
 ## 📌 Các quy tắc người dùng cần nhớ
 
 1.  **Chạy thử & Đánh giá:** Hãy bảo AI liệt kê chi tiết các bước đã thực hiện để hiểu cách vận hành.
