@@ -32,6 +32,7 @@ Upon receiving a job request, the AI **MUST** analyze which of the following ste
 - **Multi-language support:** Documents may be in Vietnamese, English, or any language. Agents MUST read and process content accurately without translation, distortion, or reinterpretation. Preserve all original text, terminology, and formatting exactly as provided.
 - **PDF handling:** If the source is a `.pdf` file, invoke the `pdf` skill via the `Skill` tool first to extract its text and tables into readable text. Do NOT attempt to read PDF directly with the `view_file`/`Read` tool.
 - **Output:** `requirements/[UC-ID]/[UC-ID]_[feature-name]_audited_[YYYYMMDD]_v[N].md`
+- **Mandatory Content:** The output MUST include a **Readiness Verdict** (Ready / Conditionally Ready / Not Ready) and a **Completeness Score (0-100%)**.
 
 ### Step 2: Scenario design (Optional)
 - **Goal:** Design test scenarios (Happy path, Edge case).
@@ -46,6 +47,7 @@ Upon receiving a job request, the AI **MUST** analyze which of the following ste
 - **Agent Assigned:** `qa-engineer`
 - **Primary Skill:** `qc-tc-design` (mode: `high-level`)
 - **Input:** `requirements/[UC-ID]/[UC-ID]_[feature-name]_audited_[YYYYMMDD].md`
+- **Mandatory Constraint:** The input audited file MUST have a verdict of **READY** or **CONDITIONALLY READY**. If NOT READY, the Agent MUST stop and report to the user.
 - **Optional Input:** `scenarios/[UC-ID]/[UC-ID]_[feature-name]_scenarios_[YYYYMMDD].md`
 - **Output:** `testcases/[UC-ID]/[UC-ID]_[feature-name]_testcases-hl_[YYYYMMDD]_v[N].xlsx`
 - **Typical case count:** 5–15 cases per UC.
@@ -57,8 +59,10 @@ Upon receiving a job request, the AI **MUST** analyze which of the following ste
 - **Primary Skill:** `qc-tc-design` (mode: `detail-level`)
 - **Supplementary Skills (Optional):** `research` (search for sample test schemas).
 - **Input:** `requirements/[UC-ID]/[UC-ID]_[feature-name]_audited_[YYYYMMDD].md`
+- **Mandatory Constraint:** Same as Step 3A (Audit Verdict MUST be Ready/Conditionally Ready).
 - **Optional Input:** `scenarios/[UC-ID]/[UC-ID]_[feature-name]_scenarios_[YYYYMMDD].md`
 - **Output:** `testcases/[UC-ID]/[UC-ID]_[feature-name]_testcases-det_[YYYYMMDD]_v[N].xlsx`
+- **Mandatory Output:** A **Requirement Traceability Matrix (RTM)** file (`_rtm_*.md`) mapping 100% of ACs to Test Cases.
 - **Typical case count:** 30–80+ cases per UC.
 - **When to use:** Full regression, pre-release QA, acceptance testing.
 
@@ -70,7 +74,9 @@ Upon receiving a job request, the AI **MUST** analyze which of the following ste
 - **Primary Skill:** `test-execution`
 - **Supplementary Skills (Optional):** `mcp-management` (for taking screenshots, UI operations).
 - **Input:** `testcases/[UC-ID]/[UC-ID]_[feature-name]_testcases-{hl|det}_[YYYYMMDD]_v[N].xlsx`
+- **Mandatory Gate:** MUST perform **Execution Readiness Audit (ERA)** before running. Score MUST be **>= 70**.
 - **Output:** `execution/[UC-ID]/reports/res_[UC-ID]_[feature-name]_testcases-{hl|det}_res_[YYYYMMDD]_v[N].xlsx`
+- **Mandatory Reporting:** The summary MUST include **RCA classification (R1-R4)**, **Stability Rating**, and **Reliability Score**.
 - **Note:** Execution accepts EITHER HL or DET test case files. The execution report inherits the same level suffix.
 
 ---
@@ -159,4 +165,32 @@ If the user explicitly rejects an output (e.g., "this audit is wrong"):
 The `PROJECT_MASTER_DASHBOARD` MUST be updated at the end of each significant work day or after a major milestone (e.g., completing an execution cycle for a UC). 
 - It MUST NOT be updated for every single minor task to avoid version clutter.
 - The latest version ALWAYS serves as the single source of truth for project health and progress.
-- Updates MUST be saved as a new versioned file (e.g., `v7` → `v8`).
+- Updates MUST be saved as a new versioned file (e.g., `v7` → `v8`).
+
+---
+
+## Execution Quality Gates & Retest Protocol
+
+To ensure absolute reliability of testing results, the following rules apply to all execution tasks:
+
+### 1. Triple-Link Verification (UI-API-DB)
+A test case status is only considered **Trusted (PASS)** if the Agent can verify it across 3 layers (where technical access is available):
+- **Layer 1 (UI):** Visual confirmation of success messages and state changes.
+- **Layer 2 (API):** Response codes (200/201) and JSON payload integrity.
+- **Layer 3 (DB):** Direct record verification in PostgreSQL via MCP.
+If any layer fails while others pass, the result MUST be flagged as **Fail (Logic Leakage)**.
+
+### 2. Reliability & Stability Assessment
+After each execution cycle, the Agent MUST report:
+- **Reliability Score:** Based on the evidence provided (Triple-Link coverage).
+- **Defect Density (DD%):** (Total Bugs / Total TCs) * 100.
+- **Stability Rating:**
+    - **Green (Stable):** DD < 5%
+    - **Yellow (At Risk):** DD 5% - 15%
+    - **Red (Unstable):** DD > 15%
+
+### 3. Retest & Re-run Trigger Rules
+- **Automatic Re-run:** If the **Reliability Score < 80%** due to Environment/Script flaws (R3/R4), the Agent MUST suggest an immediate re-run of the affected cases.
+- **Full Regression Trigger:** If a module is rated **Red (Unstable)**, a full re-test is mandatory after the development team confirms bug fixes.
+- **Bug Retest:** Every fixed bug MUST be re-tested using the exact same Test Case ID and data that originally found it, plus one additional edge case to prevent regression.
+
