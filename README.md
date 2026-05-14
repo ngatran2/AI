@@ -39,7 +39,7 @@ Tất cả tiến độ, sức khỏe dự án (Health Check) và ma trận truy
 | :--- | :--- | :--- |
 | **Jira** | `https://jira.sotatek.com` (Key: `LAMS`, Filter: `BOARD_767`) | Quản lý Bug & Theo dõi Sprint |
 | **Database** | `172.16.200.84:5432` (PostgreSQL) | Xác thực dữ liệu tầng sâu (Layer 2) |
-| **Extensions** | `Zixfel Extension` | Truy cập DOM & Giải mã OTP/2FA runtime |
+| **Extensions** | `Zixfel Extension` | Truy cập DOM, giải mã OTP/2FA runtime & cho phép nhấn Auto Run ở phần chat |
 | **Protocol** | `MCP (Model Context Protocol)` | Cầu nối bảo mật DB/File/Logs |
 
 ---
@@ -89,7 +89,16 @@ Hệ thống hỗ trợ 2 cấp độ thiết kế:
     *   **ERA Audit:** AI từ chối chạy nếu bộ Test Case < 70 điểm.
     *   **Self-Healing:** Tự động vá Locator hỏng qua Accessibility Tree.
     *   **Triple-Layer Verification:** Đối soát UI -> API -> DB PostgreSQL.
+    *   **Báo cáo bắt buộc:** Summary phải bao gồm phân loại lỗi **RCA (R1-R4)**, **Mật độ lỗi (DD%)** và **Điểm tin cậy (Reliability Score)** dựa trên Triple-Link.
     *   **AQG Hậu kiểm:** AI giải trình logic Pass/Fail (Internal Note) và cung cấp Trace ID/Error Stack.
+
+### 🛡️ Giao thức Retest & Độ ổn định (Step 4+)
+*   **Đánh giá Độ ổn định (Stability Rating):**
+    *   🟢 **Green (Stable):** DD% < 5%.
+    *   🟡 **Yellow (At Risk):** DD% 5% - 15%.
+    *   🔴 **Red (Unstable):** DD% > 15%.
+*   **Điều kiện Re-run ngay lập tức:** Khi điểm **Reliability < 80%** do lỗi môi trường hoặc script (R3/R4).
+*   **Điều kiện Full Regression:** Khi module bị đánh dấu **🔴 Red (Unstable)**, bắt buộc chạy lại toàn bộ bộ test sau khi fix.
 
 ### ⚡ Bước 5: Kiểm thử Hiệu năng (Performance Testing)
 *   **Lệnh:** `/performance-testing`.
