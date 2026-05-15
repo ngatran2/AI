@@ -55,5 +55,12 @@ Tài liệu này quy định các tiêu chuẩn kỹ thuật bắt buộc để 
 | **Post-Write Audit** | Bắt buộc chạy lệnh Read-back để kiểm tra 3 cột (Status, Actual, Note) đã có dữ liệu trước khi báo cáo hoàn thành cho User. |
 | **Row Height** | Luôn set `row.height = 70-100` và `wrap_text = True` để đảm bảo nội dung Actual Result dài không bị che khuất. |
 
+## 6. Cleanup & Zero-Clutter Policy
+
+| Hạng mục | Quy tắc bắt buộc (Guardrail) |
+| :--- | :--- |
+| **Post-Execution Cleanup** | Sau khi hoàn thành và lưu Report, BẮT BUỘC xóa các file tạm/nháp tại: `execution/[UC-ID]/scripts/`, `execution/[UC-ID]/logs/`, và thư mục `scratch/`. |
+| **Persistence Rule** | Chỉ giữ lại: 1. File Test Case gốc, 2. Báo cáo kết quả (.xlsx), 3. Báo cáo Audit (.md), 4. Ảnh chứng minh FAIL. |
+
 ---
-*Last Updated: 2026-05-13 | Version: 3.1 (Report Integrity Added)*
+*Last Updated: 2026-05-15 | Version: 3.2 (Cleanup Policy Added)*

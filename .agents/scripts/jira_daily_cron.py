@@ -14,14 +14,11 @@ PROJECT_KEY = "LAMS"
 REPORT_DIR = "../../report" # Đường dẫn tương đối từ thư mục script đến thư mục report
 
 def fetch_bugs():
-    jql = f'project = {PROJECT_KEY} AND issuetype = Bug AND status in ("Ready for test", "Fixed", "Resolved")'
+    jql = f'project = {PROJECT_KEY} AND issuetype = Bug AND status = "Ready for test"'
     url = f"{JIRA_URL}/rest/api/2/search"
     
-    auth_str = f"{EMAIL}:{API_TOKEN}"
-    encoded_auth = b64encode(auth_str.encode()).decode()
-    
     headers = {
-        "Authorization": f"Basic {encoded_auth}",
+        "Authorization": f"Bearer {API_TOKEN}",
         "Content-Type": "application/json"
     }
     
