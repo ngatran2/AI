@@ -57,7 +57,7 @@ List all deployment environments. This is crucial for test execution and manual 
 
 | Vai trò | Username / Email | Password | Secret key (OTP) |
 | :--- | :--- | :--- | :--- |
-| Admin | nga.tran2@sotatek.com | Ngoc041001 | N54X2TBDGYSSYJLOOJOTU4KTPNQUO4ZW |
+| Admin | nga.tran2@sotatek.com | Linh@12345| FYTGG5CUI5UXOPZ3FJIXUTTLKEYTAXSC |
 | Admin View | nga.tran2+50@sotatek.com | Linh@12345 | krasyq2ikbevkmr3jb4hcxjdofxwm3tt |
 | Admin Delete | nga.tran2+51@sotatek.com | Linh@12345 | g5hee4lbnv5xulbyhzas6t3fijtvky3o |
 | Admin Edit | huong.pham1@yopmail.com | tgNzNT!A3qN2Oe | MFQVWUS6J4QUOJJEJNOVOV2SF5KDIZZU |

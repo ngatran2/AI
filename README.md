@@ -126,7 +126,7 @@ Hệ thống hỗ trợ 2 cấp độ thiết kế:
 *   **Chạy thủ công:** `python .agents/scripts/jira_daily_cron.py`
 *   **Thiết lập lịch (9:00 AM hằng ngày):**
     ```powershell
-    schtasks /create /tn "JOYS_JiraDailyReport" /tr "python %CD%\.agents\scripts\jira_daily_cron.py" /sc daily /st 09:00 /f
+    schtasks /create /tn "JOYS_JiraDailyReport" /tr "python D:\AI\Newtemplate\.agents\scripts\jira_daily_cron.py" /sc daily /st 09:00 /f
     ```
 
 ---
