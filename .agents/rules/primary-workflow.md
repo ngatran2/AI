@@ -76,9 +76,10 @@ Upon receiving a job request, the AI **MUST** analyze which of the following ste
 - **Primary Skill:** `test-execution`
 - **Supplementary Skills (Optional):** `mcp-management` (for taking screenshots, UI operations).
 - **Input:** `testcases/[UC-ID]/[UC-ID]_[feature-name]_testcases-{hl|det}_[YYYYMMDD]_v[N].xlsx`
-- **Mandatory Gate:** MUST perform **Execution Readiness Audit (ERA)** before running. Score MUST be **>= 70**.
+- **Mandatory Gate 1 (Risk Declaration):** User MUST declare the **Risk Level (Low/Medium/High/Critical)** to determine the Validation Depth before starting. If not provided, Agent MUST prompt the user.
+- **Mandatory Gate 2 (ERA):** MUST perform **Execution Readiness Audit (ERA)** before running. Score MUST be **>= 70**.
 - **Output:** `execution/[UC-ID]/reports/res_[UC-ID]_[feature-name]_testcases-{hl|det}_res_[YYYYMMDD]_v[N].xlsx`
-- **Execution Mode Sync (New):** Before execution, the Agent MUST ask the User: *"Which verification mode should I use? (1. API-Only, 2. UI+DB, 3. Triple-Link/Full)"*.
+- **Execution Mode Sync:** Before execution, the Agent uses the declared Risk Level to automatically load the required modules (UI, API, DB) via Layered Skill Loading.
 - **Mandatory Reporting:** The summary MUST include **RCA classification (R1-R4)**, **Stability Rating**, and **Reliability Score**.
 - **Note:** Execution accepts EITHER HL or DET test case files. The execution report inherits the same level suffix.
 

@@ -48,9 +48,21 @@ Tất cả tiến độ, sức khỏe dự án (Health Check) và ma trận truy
 
 ### 🤖 Thư mục hệ thống Agent (`.agents/`)
 *   **agents/**: Nơi định nghĩa các persona (docs-reader, requirement-reviewer, qa-engineer).
-*   **rules/**: Chứa các quy tắc hệ thống bắt buộc (`primary-workflow.md`, `naming-convention.md`).
-*   **skills/**: Chứa các kỹ năng chuyên biệt (`qc-uc-review`, `performance-testing`, `pdf`, `qc-ask-ba`).
+*   **rules/**: Chứa các quy tắc hệ thống bắt buộc (`primary-workflow.md`, `naming-convention.md`, `qa_global_invariants.md`, `qa_shared_terms.md`).
 *   **workflows/**: Điểm kích hoạt các lệnh tắt (`/qc-review-uc`, `/execute-testcases`, `/performance-testing`).
+*   **skills/**: Chứa các kỹ năng chuyên biệt (`qc-uc-review`, `performance-testing`). Đặc biệt, skill `test-execution` được thiết kế theo kiến trúc **Domain-Driven Design (Micro-Modules)** kết hợp **Layered Skill Loading** để giải quyết bài toán Token Explosion:
+    *   `SKILL.md`: Router điều phối, chỉ đạo AI nạp các module dựa trên Risk Level.
+    *   `core/`: Trái tim điều phối (`execution-core.md`) và trạm gác kiểm duyệt (`readiness-audit.md`).
+    *   `automation/`: Chuẩn mực Playwright (`playwright-standard.md`) và Động cơ chống Flaky/Quản trị RAM (`stability-engine.md`).
+    *   `governance/`: Chống rò rỉ dữ liệu DB (`db-governance.md`), Quality Gate L1-L4 (`rca-and-quality.md`) và chuẩn xuất Excel (`reporting-format.md`).
+    *   `integration/`: Quét và báo cáo Bug (`jira-hook.md`).
+    
+    > [!TIP]
+    > **Tại sao phải chia nhỏ cấu trúc Test Execution (Micro-Modules)?**
+    > Thay vì nhồi nhét tất cả quy tắc kiểm thử vào một file khổng lồ, kiến trúc chia nhỏ kết hợp Layered Skill Loading mang lại 3 lợi ích cốt lõi:
+    > 1. **Chống quá tải Token (Token Explosion):** Tùy theo Risk Level, AI sẽ chỉ "đọc" những file thực sự cần thiết (VD: Nếu chạy test Low Risk, AI sẽ bỏ qua toàn bộ module DB Governance). Giúp tiết kiệm tài nguyên và tăng tốc độ thực thi.
+    > 2. **Triệt tiêu "Ảo giác" & Xung đột Logic (Anti-Hallucination):** Việc gom nhóm chặt chẽ theo Domain giúp AI không bị nhiễu thông tin, quên rule cũ hay áp dụng nhầm các nguyên tắc của module này sang module khác.
+    > 3. **Khả năng mở rộng vô hạn (Enterprise Scalability):** Dễ dàng cắm thêm các module mới trong tương lai (Mobile Automation, API Testing, Security) mà không làm vỡ cấu trúc "trái tim" điều phối ban đầu.
 
 ### 🛠 Thư mục làm việc theo Pipeline
 *   **requirements/**: Tài liệu đặc tả yêu cầu (Use Case) & báo cáo `audited`.
@@ -84,15 +96,15 @@ Hệ thống hỗ trợ 2 cấp độ thiết kế:
 *   **Tiêu chuẩn Harden:** Bắt buộc dùng Action Keywords, Atomic Steps, State-based ER (UI/API/DB) và 100% AC Coverage (Traceability Matrix).
 
 ### 🔴 Bước 4: Thực thi kiểm thử (Test Execution)
-*   **Mục đích:** Chạy Test Case trên môi trường thật và báo cáo kết quả.
-*   **Ra lệnh:** Lệnh `/execute-testcases`.
-*   **Tính năng nâng cao:** 
-    *   **Execution Mode Sync:** AI luôn hỏi User để chọn 1 trong 3 chế độ: 1. API-Only, 2. UI+DB, 3. Triple-Link (Full).
-    *   **ERA Audit:** AI từ chối chạy nếu bộ Test Case < 70 điểm.
-    *   **Self-Healing:** Tự động vá Locator hỏng qua Accessibility Tree.
-    *   **Triple-Layer Verification:** Đối soát linh hoạt tùy theo Mode đã chọn.
-    *   **Báo cáo bắt buộc:** Summary phải bao gồm phân loại lỗi **RCA (R1-R4)**, **Mật độ lỗi (DD%)** và **Điểm tin cậy (Reliability Score)** dựa trên bằng chứng đa lớp.
-    *   **AQG Hậu kiểm:** AI giải trình logic Pass/Fail (Internal Note) và cung cấp Trace ID/Error Stack.
+*   **Mục đích:** Chạy Test Case trên môi trường thật và báo cáo kết quả thông qua **Enterprise Autonomous QC Operating Model**.
+*   **Ra lệnh:** Gọi yêu cầu `execute test cases` hoặc tương tác trực tiếp với Agent.
+*   **Tính năng nâng cao (Enterprise-Grade):** 
+    *   **Risk Declaration Gate:** Trước khi chạy, hệ thống yêu cầu xác định **Risk Level (Low/Medium/High/Critical)** để kích hoạt cơ chế **Layered Skill Loading** (AI chỉ nạp module chuyên sâu như DB-Governance nếu risk cao, giúp tối ưu 50% Token).
+    *   **ERA Audit:** Trạm gác Quality Gate số 1. Từ chối chạy nếu bộ Test không cung cấp đủ DB Schema hoặc điểm đánh giá < 70.
+    *   **Deterministic Locator Fallback:** Loại bỏ cơ chế AI "đoán mò" DOM. Bắt buộc dùng chuỗi fallback tuyến tính (Role -> Label -> TestID -> Text) và kèm bước xác minh (Self-Healing Validation).
+    *   **Enterprise Leakage Detection:** Đánh hơi các lỗi ngầm (L1-L4) bằng cách đối chiếu chéo độ trễ Async/Queue giữa giao diện và Database (Commit Stability Window).
+    *   **Stability & Scale Engine:** Chống crash máy chủ khi chạy hàng nghìn cases bằng cơ chế tái chế trình duyệt (Browser Recycling), dọn rác ảnh PASS, và phát hiện Flaky Test (Rerun).
+    *   **Báo cáo Reproducibility:** File Excel đầu ra bắt buộc đính kèm Execution Metadata (Timestamp, Git Hash) và mã phân loại lỗi gốc **RCA (R1-R4)**.
 
 ### 🛡️ Giao thức Retest & Độ ổn định (Step 4+)
 *   **Đánh giá Độ ổn định (Stability Rating):**
